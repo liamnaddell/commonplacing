@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: commonplacing
+spec:
+  containers:
+    - image: qlek/commonplacing
+      name: commonplacing
+      ports:
+        - containerPort: 8080
+          protocol: TCP
+
