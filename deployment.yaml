@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: commondep
+  labels:
+    app: commonplacing
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: commonplacing
+  template:
+    metadata:
+      name: commonplacing
+      labels:
+        app: commonplacing
+    spec:
+      containers:
+      - name: commonplacing
+        image: qlek/commonplacing:1.0
+        ports:
+          - containerPort: 8080
