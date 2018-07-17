@@ -1,15 +1,10 @@
-MAINTAINER Liam Naddell (liamnprg@gmail.com)
-CMD ["cargo", "run", "--release"]
-
-
-FROM rustlang/rust:nightly-slim
+FROM rustlang/rust:nightly-slim as builder
 RUN mkdir -p /app
 WORKDIR /app
 COPY . .
 RUN cargo build --release
 
-FROM alpine:latest  
-COPY --from=builder /app .
+FROM debian:stretch-slim  
+COPY --from=builder /app /app
 WORKDIR /app/
-CMD ["/bin/sh"]  
-
+CMD ["./target/release/commonplacing"]  

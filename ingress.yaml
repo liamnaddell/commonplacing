@@ -1,0 +1,19 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: commonplacing
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    kubernetes.io/tls-acme: "true"
+spec:
+  tls:
+    - hosts:
+      - koob.koob.liamnprg.xyz
+      secretName: playground-secret
+  rules:
+    - host: koob.koob.liamnprg.xyz
+      http:
+        paths:
+          - backend:
+              serviceName: comservice
+              servicePort: 80

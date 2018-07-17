@@ -17,6 +17,6 @@ spec:
     spec:
       containers:
       - name: commonplacing
-        image: qlek/commonplacing:1.0
+        image: qlek/commonplacing:1.2
         ports:
           - containerPort: 8080
