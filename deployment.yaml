@@ -20,3 +20,13 @@ spec:
         image: qlek/commonplacing:1.2
         ports:
           - containerPort: 8080
+            name: http
+        livenessProbe:
+          httpGet:
+            path: /
+            port: http
+          periodSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /
+            port: http
