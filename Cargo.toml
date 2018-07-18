@@ -6,4 +6,4 @@ authors = ["Liam Naddell <liamnprg@gmail.com>"]
 [dependencies]
 rocket = "0.3.15"
 rocket_codegen = "0.3.15"
-postgres = "0.15"
+mysql = "14.0.0"

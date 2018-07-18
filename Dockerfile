@@ -4,7 +4,8 @@ WORKDIR /app
 COPY . .
 RUN cargo build --release
 
-FROM debian:stretch-slim  
+
+FROM frolvlad/alpine-glibc
 COPY --from=builder /app /app
 WORKDIR /app/
 CMD ["./target/release/commonplacing"]  

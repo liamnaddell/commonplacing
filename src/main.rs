@@ -2,28 +2,21 @@
 #![plugin(rocket_codegen)]
 
 extern crate rocket;
-extern crate postgres;
+extern crate mysql;
 
-use postgres::{Connection, TlsMode};
-
+//use postgres::{Connection, TlsMode};
+use rocket::State;
 use std::io;
 use std::path::{Path, PathBuf};
 use rocket::response::NamedFile;
+use mysql as my;
+
+
 
 #[get("/")]
-fn index() -> io::Result<NamedFile> {
-    let string = "postgres://postgres:alliesofphotoyodaarestrong@localhost/mydb";
-    println!("{}",string);
-    let conn = Connection::connect(string, TlsMode::None).unwrap();
-    for row in &conn.query("SELECT * FROM webpage", &[&0]).unwrap() {
-        let bar: String = row.get(0);
-        println!("{}",bar)
-    }
+fn index(conn: State<String>) -> io::Result<NamedFile> {
     NamedFile::open("static/index.html")
-
 }
-
-
 
 
 #[get("/<file..>")]
@@ -36,5 +29,11 @@ fn rocket() -> rocket::Rocket {
 }
 
 fn main() {
-    rocket().launch();
+    let string = "mysql://deadbeef:dlahfalsdfhieorpqwhfalkdsfhsadfwer@localhost:3306/mydb";
+    //let string = "mysql://deadbeef:ldfakjlsdfwoiqtyweurynmc@localhost:3306/mydb";
+    println!("{}",string);
+    let pool = my::Pool::new(string).unwrap();
+    rocket()
+        .manage(pool)
+        .launch();
 }
