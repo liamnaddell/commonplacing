@@ -6,11 +6,12 @@ extern crate mysql;
 
 //use postgres::{Connection, TlsMode};
 use rocket::State;
-use std::io;
+//use std::io;
 use std::path::{Path, PathBuf};
 use rocket::response::NamedFile;
 use mysql as my;
 use mysql::from_row;
+use std::env;
 
 
 
@@ -37,8 +38,21 @@ fn rocket() -> rocket::Rocket {
 }
 
 fn main() {
-    let string = "mysql://deadbeef:dlahfalsdfhieorpqwhfalkdsfhsadfwer@localhost:3306/mydb";
+//    let string = "mysql://root:6PQugrj9ly@mineql-mysql.default.svc.cluster.local:3306/mydb";
     //let string = "mysql://deadbeef:ldfakjlsdfwoiqtyweurynmc@localhost:3306/mydb";
+    let str1 = match env::var("STR1") {
+        Ok(val) => {println!("STR1: {:?}", val); val},
+        Err(e) => {println!("couldn't interpret STR: {}", e); String::from("")},
+    };
+    let pass = match env::var("PASS") {
+        Ok(val) => {println!("PASS: {:?}", val); val},
+        Err(e) => {println!("couldn't interpret STR: {}", e); String::from("")},
+    };
+    let str2 = match env::var("STR2") {
+        Ok(val) => {println!("STR2: {:?}", val); val},
+        Err(e) => {println!("couldn't interpret STR: {}", e); String::from("")},
+    };
+    let string = format!("{}{}{}",str1,pass,str2);
     println!("{}",string);
     let pool = my::Pool::new(string).unwrap();
     rocket()

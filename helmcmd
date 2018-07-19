@@ -1,0 +1,4 @@
+#!/bin/sh
+helm install --name mineql \
+  --set mysqlDatabase=mydb \
+      stable/mysql

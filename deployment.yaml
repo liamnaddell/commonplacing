@@ -17,7 +17,23 @@ spec:
     spec:
       containers:
       - name: commonplacing
-        image: qlek/commonplacing:1.2
+        env:
+        - name: STR1
+          valueFrom:
+            secretKeyRef:
+              name: connstring
+              key: connstring1
+        - name: STR2
+          valueFrom:
+            secretKeyRef:
+              name: connstring
+              key: connstring2
+        - name: PASS
+          valueFrom:
+            secretKeyRef:
+              name: mineql-mysql
+              key: mysql-root-password
+        image: localhost:5000/commonplacing:1.4
         ports:
           - containerPort: 8080
             name: http
@@ -30,3 +46,4 @@ spec:
           httpGet:
             path: /
             port: http
+#        image: qlek/commonplacing:1.2
