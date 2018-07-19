@@ -10,12 +10,20 @@ use std::io;
 use std::path::{Path, PathBuf};
 use rocket::response::NamedFile;
 use mysql as my;
+use mysql::from_row;
 
 
 
 #[get("/")]
-fn index(conn: State<String>) -> io::Result<NamedFile> {
-    NamedFile::open("static/index.html")
+fn index(pool: State<my::Pool>) -> /*io::Result<NamedFile>*/ String {
+    let mut val = vec!();
+    for row in pool.inner().prep_exec("SELECT * from website", ()).unwrap() {
+        let a: String = from_row(row.unwrap());
+        println!("{}", a);
+        val.push(a);
+    }
+//    NamedFile::open("static/index.html")
+    val.get(0).unwrap().to_string()
 }
 
 
